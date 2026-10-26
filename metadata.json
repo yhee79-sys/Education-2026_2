@@ -1,0 +1,6 @@
+{
+  "name": "AI 윤리 딜레마 여론조사 및 교차분석 플랫폼",
+  "description": "Supabase 기반 AI 윤리 딜레마 동적 설문조사, 인구통계학적 교차 필터 통계 및 한국어 자연어 워드클라우드 피드 애플리케이션",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
