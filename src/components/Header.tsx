@@ -3,19 +3,14 @@ import {
   BarChart3,
   Bot,
   CheckCircle,
-  Database,
   HelpCircle,
   RotateCcw,
-  Server,
   Sparkles,
 } from 'lucide-react';
 
 interface HeaderProps {
   currentView: 'survey' | 'stats';
   onNavigate: (view: 'survey' | 'stats') => void;
-  isLiveSupabase: boolean;
-  onOpenSqlModal: () => void;
-  onOpenConfigModal: () => void;
   onResetParticipation: () => void;
   hasResponded: boolean;
 }
@@ -23,9 +18,6 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   currentView,
   onNavigate,
-  isLiveSupabase,
-  onOpenSqlModal,
-  onOpenConfigModal,
   onResetParticipation,
   hasResponded,
 }) => {
@@ -59,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </span>
               </div>
               <p className="text-[11px] text-slate-500 hidden sm:block">
-                Dynamic Supabase & Cross-filter Analytics
+                성별·연령별 교차 필터 통계 및 서술형 분석
               </p>
             </div>
           </div>
@@ -96,34 +88,6 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Buttons */}
         <div className="flex items-center gap-2">
-          {/* Supabase Status Pill */}
-          <button
-            onClick={onOpenConfigModal}
-            className={`hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-              isLiveSupabase
-                ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
-                : 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
-            }`}
-            title="Supabase 연결 상태 및 설정 열기"
-          >
-            <span
-              className={`w-2 h-2 rounded-full ${
-                isLiveSupabase ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
-              }`}
-            />
-            <span>{isLiveSupabase ? 'Supabase 연동됨' : '로컬 모드 (연동 설정)'}</span>
-          </button>
-
-          {/* SQL Schema trigger */}
-          <button
-            onClick={onOpenSqlModal}
-            className="hidden sm:flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg transition-colors shadow-2xs"
-            title="Supabase SQL 스키마 복사"
-          >
-            <Database className="w-3.5 h-3.5 text-slate-500" />
-            <span>SQL 스키마</span>
-          </button>
-
           {/* Reset Participation flag */}
           <button
             onClick={handleReset}

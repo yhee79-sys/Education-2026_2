@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { DemographicsStep } from './components/DemographicsStep';
 import { Header } from './components/Header';
-import { SqlSchemaModal } from './components/SqlSchemaModal';
 import { StatsDashboard } from './components/StatsDashboard';
-import { SupabaseConfigModal } from './components/SupabaseConfigModal';
 import { SurveyWizard } from './components/SurveyWizard';
 import {
   addSampleDataBatch,
   fetchAllEnrichedData,
   loadActiveQuestions,
-  resetLocalData,
   submitSurveyAnswers,
 } from './lib/supabase';
 import {
@@ -20,7 +17,7 @@ import {
   Question,
   ResponseRecord,
 } from './types/database';
-import { AlertTriangle, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const LOCAL_STORAGE_KEY_HAS_RESPONDED = 'ai_ethics_has_responded_v1';
 const LOCAL_STORAGE_KEY_SESSION_ID = 'ai_ethics_session_id_v1';
@@ -40,10 +37,6 @@ export default function App() {
   // User demographic state
   const [selectedGender, setSelectedGender] = useState<Gender | null>(null);
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<AgeGroup | null>(null);
-
-  // Modals
-  const [isSqlModalOpen, setIsSqlModalOpen] = useState(false);
-  const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
 
   // 1. Session ID & Has Responded Check
   useEffect(() => {
@@ -165,9 +158,6 @@ export default function App() {
       <Header
         currentView={currentView}
         onNavigate={handleNavigate}
-        isLiveSupabase={isLiveSupabase}
-        onOpenSqlModal={() => setIsSqlModalOpen(true)}
-        onOpenConfigModal={() => setIsConfigModalOpen(true)}
         onResetParticipation={handleResetParticipation}
         hasResponded={hasResponded}
       />
@@ -213,40 +203,14 @@ export default function App() {
         )}
       </main>
 
-      {/* Modals */}
-      <SqlSchemaModal
-        isOpen={isSqlModalOpen}
-        onClose={() => setIsSqlModalOpen(false)}
-      />
-
-      <SupabaseConfigModal
-        isOpen={isConfigModalOpen}
-        onClose={() => setIsConfigModalOpen(false)}
-        onConfigUpdated={loadAllData}
-      />
-
       {/* Footer */}
       <footer className="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>© 2026 AI 윤리 딜레마 대국민 여론조사 & 교차분석 플랫폼</p>
           <div className="flex items-center gap-4 text-[11px]">
             <button
-              onClick={() => setIsSqlModalOpen(true)}
-              className="hover:text-indigo-600 transition-colors"
-            >
-              Supabase SQL DDL
-            </button>
-            <span>•</span>
-            <button
-              onClick={() => setIsConfigModalOpen(true)}
-              className="hover:text-indigo-600 transition-colors"
-            >
-              Supabase API 설정
-            </button>
-            <span>•</span>
-            <button
               onClick={handleResetParticipation}
-              className="hover:text-indigo-600 transition-colors"
+              className="text-slate-500 hover:text-indigo-600 transition-colors"
             >
               설문 재참여 (초기화)
             </button>
